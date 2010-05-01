@@ -1,0 +1,20 @@
+application: reeljs
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /jquery.reel.js
+  static_files: reel-min.js
+  upload: reel-min.js
+
+- url: /jquery.reel-bundle.js
+  static_files: reel-bundle.js
+  upload: reel-bundle.js
+
+- url: /jquery.reel-debug.js
+  static_files: reel.js
+  upload: reel.js
+
+- url: /.*
+  script: cacheheaders.py
