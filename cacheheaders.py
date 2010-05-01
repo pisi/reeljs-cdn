@@ -20,30 +20,18 @@ class MainPage(webapp.RequestHandler):
       self.error(404)
       return
 
-  def get(self, dir, file, extension):
-    if (dir!='js' and dir!='css' and dir!='images'):
-      self.error(404)
-      return
-
-    if (extension!='js' and extension!='css' and extension!='jpg' and extension!='png' and extension!='gif'):
+  def get(self, file, extension):
+    if (extension!='js'):
       self.error(404)
       return
 
     if extension=='js':
       self.response.headers['Content-Type'] = 'application/x-javascript'
-    elif extension=='css':
-      self.response.headers['Content-Type'] = 'text/css'
-    elif extension=='jpg':
-      self.response.headers['Content-Type'] = 'image/jpeg'
-    elif extension=='gif':
-      self.response.headers['Content-Type'] = 'image/gif'
-    elif extension=='png':
-      self.response.headers['Content-Type'] = 'image/png'
 
     try:
       import os
       import datetime
-      path = dir+'/'+file+"."+extension
+      path = file+"."+extension
       info = os.stat(path)
       lastmod = datetime.datetime.fromtimestamp(info[8])
       if self.request.headers.has_key('If-Modified-Since'):
@@ -63,7 +51,7 @@ class MainPage(webapp.RequestHandler):
       return
 
 def main():
-  application = webapp.WSGIApplication([(r'/(.*)/([^.]*).(.*)', MainPage)], debug=False)
+  application = webapp.WSGIApplication([(r'/([^.]*).(.*)', MainPage)], debug=False)
   wsgiref.handlers.CGIHandler().run(application)
 
 if __name__ == "__main__":
