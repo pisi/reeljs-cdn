@@ -8,6 +8,10 @@ handlers:
   static_files: reel-min.js
   upload: reel-min.js
 
+- url: /favicon.ico
+  static_files: icon.png
+  upload: icon.png
+
 - url: /jquery.reel-bundle.js
   static_files: reel-bundle.js
   upload: reel-bundle.js

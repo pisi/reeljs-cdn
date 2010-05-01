@@ -21,12 +21,14 @@ class MainPage(webapp.RequestHandler):
       return
 
   def get(self, file, extension):
-    if (extension!='js'):
+    if (extension!='js' or extension!='ico'):
       self.error(404)
       return
 
     if extension=='js':
       self.response.headers['Content-Type'] = 'application/x-javascript'
+    elif extension=='ico':
+      self.response.headers['Content-Type'] = 'image/png'
 
     try:
       import os
