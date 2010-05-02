@@ -16,7 +16,7 @@ handlers:
   static_files: reel-bundle.js
   upload: reel-bundle.js
 
-- url: /jquery.reel-development.js
+- url: /jquery.reel-devel.js
   static_files: reel.js
   upload: reel.js
 

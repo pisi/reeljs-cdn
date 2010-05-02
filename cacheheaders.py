@@ -5,40 +5,26 @@ from google.appengine.ext import webapp
 
 class MainPage(webapp.RequestHandler):
 
-  def output_file(self, path, lastmod):
-    import datetime
-    try:
-      self.response.headers['Cache-Control']='public, max-age=31536000'
-      self.response.headers['Last-Modified'] = lastmod.strftime("%a, %d %b %Y %H:%M:%S GMT")
-      expires=lastmod+datetime.timedelta(days=365)
-      self.response.headers['Expires'] = expires.strftime("%a, %d %b %Y %H:%M:%S GMT")
-      fh=open(path, 'r')
-      self.response.out.write(fh.read())
-      fh.close
-      return
-    except IOError:
-      self.error(404)
-      return
-
   def get(self, file, extension):
-    if (extension!='js' or extension!='ico'):
+    path= file+"."+extension
+
+    if path == 'favicon.ico':
+      self.response.headers['Content-Type']= 'image/png'
+    elif extension == 'js':
+      self.response.headers['Content-Type']= 'application/javascript'
+    else:
+    # Reject everything else
       self.error(404)
       return
-
-    if extension=='js':
-      self.response.headers['Content-Type'] = 'application/x-javascript'
-    elif extension=='ico':
-      self.response.headers['Content-Type'] = 'image/png'
 
     try:
       import os
       import datetime
-      path = file+"."+extension
-      info = os.stat(path)
-      lastmod = datetime.datetime.fromtimestamp(info[8])
+      info= os.stat(path)
+      lastmod= datetime.datetime.fromtimestamp(info[8])
       if self.request.headers.has_key('If-Modified-Since'):
-        dt = self.request.headers.get('If-Modified-Since').split(';')[0]
-        modsince = datetime.datetime.strptime(dt, "%a, %d %b %Y %H:%M:%S %Z")
+        dt= self.request.headers.get('If-Modified-Since').split(';')[0]
+        modsince= datetime.datetime.strptime(dt, "%a, %d %b %Y %H:%M:%S %Z")
         if modsince >= lastmod:
         # The file is older than the cached copy (or exactly the same)
           self.error(304)
@@ -49,6 +35,21 @@ class MainPage(webapp.RequestHandler):
       else:
         self.output_file(path, lastmod)
     except:
+      self.error(404)
+      return
+
+  def output_file(self, path, lastmod):
+    import datetime
+    try:
+      self.response.headers['Cache-Control']= 'public, max-age=31536000'
+      self.response.headers['Last-Modified']= lastmod.strftime("%a, %d %b %Y %H:%M:%S GMT")
+      expires= lastmod + datetime.timedelta(days= 365)
+      self.response.headers['Expires']= expires.strftime("%a, %d %b %Y %H:%M:%S GMT")
+      fh= open(path, 'r')
+      self.response.out.write(fh.read())
+      fh.close
+      return
+    except IOError:
       self.error(404)
       return
 
