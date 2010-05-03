@@ -12,6 +12,8 @@ class MainPage(webapp.RequestHandler):
       self.response.headers['Content-Type']= 'image/png'
     elif extension == 'js':
       self.response.headers['Content-Type']= 'application/javascript'
+    elif extension == 'gif':
+      self.response.headers['Content-Type']= 'image/gif'
     else:
     # Reject everything else
       self.error(404)
