@@ -41,9 +41,9 @@ class MainPage(webapp.RequestHandler):
   def output_file(self, path, lastmod):
     import datetime
     try:
-      self.response.headers['Cache-Control']= 'public, max-age=31536000'
+      self.response.headers['Cache-Control']= 'public, max-age=2592000'
       self.response.headers['Last-Modified']= lastmod.strftime("%a, %d %b %Y %H:%M:%S GMT")
-      expires= lastmod + datetime.timedelta(days= 365)
+      expires= lastmod + datetime.timedelta(days= 30)
       self.response.headers['Expires']= expires.strftime("%a, %d %b %Y %H:%M:%S GMT")
       fh= open(path, 'r')
       self.response.out.write(fh.read())
