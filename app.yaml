@@ -20,21 +20,13 @@ handlers:
   static_files: reel.js
   upload: reel.js
 
-- url: /jquery.reel.120x30.gif
-  static_files: jquery.reel.120x30.gif
-  upload: jquery.reel.120x30.gif
+- url: /jquery.reel.120x30-color.gif
+  static_files: jquery.reel-color.gif
+  upload: jquery.reel-color.gif
 
-- url: /jquery.reel.120x30-green.gif
-  static_files: jquery.reel.120x30-green.gif
-  upload: jquery.reel.120x30-green.gif
-
-- url: /jquery.reel.120x30-red.gif
-  static_files: jquery.reel.120x30-red.gif
-  upload: jquery.reel.120x30-red.gif
-
-- url: /jquery.reel.120x30-grey.gif
-  static_files: jquery.reel.120x30-grey.gif
-  upload: jquery.reel.120x30-grey.gif
+- url: /jquery.reel.120x30-mono.gif
+  static_files: jquery.reel-mono.gif
+  upload: jquery.reel-mono.gif
 
 - url: /.*
   script: cacheheaders.py
