@@ -4,29 +4,25 @@ runtime: python
 api_version: 1
 
 handlers:
-- url: /jquery.reel.js
+- url: /jquery\.reel\.js
   static_files: reel-min.js
-  upload: reel-min.js
+  upload: reel-min\.js
 
-- url: /favicon.ico
+- url: /favicon\.ico
   static_files: icon.png
-  upload: icon.png
+  upload: icon\.png
 
-- url: /jquery.reel-bundle.js
+- url: /jquery\.reel-bundle\.js
   static_files: reel-bundle.js
-  upload: reel-bundle.js
+  upload: reel-bundle\.js
 
-- url: /jquery.reel-devel.js
+- url: /jquery\.reel-devel\.js
   static_files: reel.js
-  upload: reel.js
+  upload: reel\.js
 
-- url: /jquery.reel.120x30-color.gif
-  static_files: jquery.reel-color.gif
-  upload: jquery.reel-color.gif
-
-- url: /jquery.reel.120x30-mono.gif
-  static_files: jquery.reel-mono.gif
-  upload: jquery.reel-mono.gif
+- url: /jquery\.reel-(\d+)\.gif
+  static_files: jquery.reel-\1.gif
+  upload: jquery\.reel-\d+\.gif
 
 - url: /.*
   script: cacheheaders.py
