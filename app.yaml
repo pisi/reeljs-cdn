@@ -5,20 +5,36 @@ api_version: 1
 
 handlers:
 - url: /jquery\.reel\.js
-  static_files: reel-min.js
-  upload: reel-min\.js
+  static_files: reel-1.0.4-min.js
+  upload: reel-1\.0\.4-min\.js
+
+- url: /jquery\.reel-1\.0\.js
+  static_files: reel-1.0.4-min.js
+  upload: reel-1\.0\.4-min\.js
 
 - url: /favicon\.ico
   static_files: icon.png
   upload: icon\.png
 
 - url: /jquery\.reel-bundle\.js
-  static_files: reel-bundle.js
-  upload: reel-bundle\.js
+  static_files: reel-1.0.4-bundle.js
+  upload: reel-1\.0\.4-bundle\.js
+
+- url: /jquery\.reel-1\.0-bundle\.js
+  static_files: reel-1.0.4-bundle.js
+  upload: reel-1\.0\.4-bundle\.js
 
 - url: /jquery\.reel-devel\.js
-  static_files: reel.js
-  upload: reel\.js
+  static_files: reel-1.0.4.js
+  upload: reel-1\.0\.4\.js
+
+- url: /jquery\.reel-1\.0-devel\.js
+  static_files: reel-1.0.4.js
+  upload: reel-1\.0\.4\.js
+
+- url: /jquery\.reel-1\.1-devel\.js
+  static_files: reel-1.1rc.js
+  upload: reel-1\.1rc\.js
 
 - url: /jquery\.reel-(\d+)\.gif
   static_files: jquery.reel-\1.gif
