@@ -4,8 +4,8 @@ jQuery Reel CDN
 An app for hosting & delivering latest [jQuery Reel][reel]
 via *content delivery network* using Google's cloud.
 
-Hosting jQuery Reel 1.0.4:
---------------------------
+Hosting jQuery Reel 1.1:
+------------------------
 
 * http://code.vostrel.cz/jquery.reel.js - [Source][source]
 * http://code.vostrel.cz/jquery.reel-bundle.js - [Bundle][bundle]
