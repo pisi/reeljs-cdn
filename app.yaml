@@ -57,6 +57,13 @@ handlers:
   static_files: icon.png
   upload: icon\.png
 
+- url: /jquery\.reel.cursor-drag\.gif
+  static_files: jquery.reel.cursor-drag.gif
+  upload: jquery\.reel.cursor-drag\.gif
+
+- url: /jquery\.reel.cursor-drag-down\.gif
+  static_files: jquery.reel.cursor-drag-down.gif
+  upload: jquery\.reel.cursor-drag-down\.gif
 
 
 # Essentials
@@ -64,6 +71,8 @@ handlers:
 - url: /blank\.gif
   static_files: blank.gif
   upload: blank\.gif
+
+
 
 - url: /.*
   script: cacheheaders.py
