@@ -57,5 +57,13 @@ handlers:
   static_files: icon.png
   upload: icon\.png
 
+
+
+# Essentials
+
+- url: /blank\.gif
+  static_files: blank.gif
+  upload: blank\.gif
+
 - url: /.*
   script: cacheheaders.py
