@@ -8,30 +8,45 @@ handlers:
 # Latest
 
 - url: /jquery\.reel\.js
-  static_files: reel-1.1.1-min.js
-  upload: reel-1\.1\.1-min\.js
+  static_files: reel-1.1.2-min.js
+  upload: reel-1\.1\.2-min\.js
 
 - url: /jquery\.reel-bundle\.js
-  static_files: reel-1.1.1-bundle.js
-  upload: reel-1\.1\.1-bundle\.js
+  static_files: reel-1.1.2-bundle.js
+  upload: reel-1\.1\.2-bundle\.js
 
 - url: /jquery\.reel-devel\.js
-  static_files: reel-1.1.1.js
-  upload: reel-1\.1\.1\.js
+  static_files: reel-1.1.2.js
+  upload: reel-1\.1\.2\.js
+
+# Edge (1.1.2)
+
+- url: /jquery\.reel-edge.js
+  static_files: reel-1.1.2-min.js
+  upload: reel-1\.1\.2-min\.js
+
+- url: /jquery\.reel-edge-bundle\.js
+  static_files: reel-1.1.2-bundle.js
+  upload: reel-1\.1\.2-bundle\.js
+
+- url: /jquery\.reel-edge-devel\.js
+  static_files: reel-1.1.2.js
+  upload: reel-1\.1\.2\.js
+
 
 # 1.1.x
 
 - url: /jquery\.reel-1\.1\.js
-  static_files: reel-1.1.1-min.js
-  upload: reel-1\.1\.1-min\.js
+  static_files: reel-1.1.2-min.js
+  upload: reel-1\.1\.2-min\.js
 
 - url: /jquery\.reel-1\.1-bundle\.js
-  static_files: reel-1.1.1-bundle.js
-  upload: reel-1\.1\.1-bundle\.js
+  static_files: reel-1.1.2-bundle.js
+  upload: reel-1\.1\.2-bundle\.js
 
 - url: /jquery\.reel-1\.1-devel\.js
-  static_files: reel-1.1.1.js
-  upload: reel-1\.1\.1\.js
+  static_files: reel-1.1.2.js
+  upload: reel-1\.1\.2\.js
 
 # 1.0.x
 
