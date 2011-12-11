@@ -137,6 +137,14 @@ handlers:
   upload: jquery\.reel\.cursor-drag-down\.gif
 
 
+
+
+- url: /embed/jquery\.reel\.js
+  script: embed.jquery.reel.py
+
+
+
+
 # Essentials
 
 - url: /blank\.gif
