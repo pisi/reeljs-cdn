@@ -152,6 +152,28 @@ handlers:
   static_files: icon.png
   upload: icon\.png
 
+
+# 1.2 Cursors (CURs)
+
+- url: /jquery\.reel-white\.cur
+  static_files: jquery.reel-white.cur
+  upload: jquery\.reel-white\.cur
+
+- url: /jquery\.reel-black\.cur
+  static_files: jquery.reel-black.cur
+  upload: jquery\.reel-black\.cur
+
+- url: /jquery\.reel-drag\.cur
+  static_files: jquery.reel-drag.cur
+  upload: jquery\.reel-drag\.cur
+
+- url: /jquery\.reel-drag-down\.cur
+  static_files: jquery.reel-drag-down.cur
+  upload: jquery\.reel-drag-down\.cur
+
+
+# 1.1 Cursors (GIFs)
+
 - url: /jquery\.reel\.cursor-drag\.gif
   static_files: jquery.reel.cursor-drag.gif
   upload: jquery\.reel\.cursor-drag\.gif
@@ -160,6 +182,16 @@ handlers:
   static_files: jquery.reel.cursor-drag-down.gif
   upload: jquery\.reel\.cursor-drag-down\.gif
 
+
+# Licenses
+
+- url: /MIT-LICENSE\.txt
+  static_files: MIT-LICENSE.txt
+  upload: MIT-LICENSE\.txt
+
+- url: /GPL-LICENSE\.txt
+  static_files: GPL-LICENSE.txt
+  upload: GPL-LICENSE\.txt
 
 
 
