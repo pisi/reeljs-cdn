@@ -183,6 +183,16 @@ handlers:
   upload: jquery\.reel\.cursor-drag-down\.gif
 
 
+# Licenses
+
+- url: /MIT-LICENSE\.txt
+  static_files: MIT-LICENSE.txt
+  upload: MIT-LICENSE\.txt
+
+- url: /GPL-LICENSE\.txt
+  static_files: GPL-LICENSE.txt
+  upload: GPL-LICENSE\.txt
+
 
 
 
