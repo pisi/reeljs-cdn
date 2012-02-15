@@ -155,13 +155,9 @@ handlers:
 
 # 1.2 Cursors (CURs)
 
-- url: /jquery\.reel-white\.cur
+- url: /jquery\.reel\.cur
   static_files: jquery.reel-white.cur
   upload: jquery\.reel-white\.cur
-
-- url: /jquery\.reel-black\.cur
-  static_files: jquery.reel-black.cur
-  upload: jquery\.reel-black\.cur
 
 - url: /jquery\.reel-drag\.cur
   static_files: jquery.reel-drag.cur
