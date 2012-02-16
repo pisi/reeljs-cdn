@@ -175,14 +175,17 @@ handlers:
 - url: /jquery\.reel\.cur
   static_files: jquery.reel-white.cur
   upload: jquery\.reel-white\.cur
+  mime_type: image/x-icon
 
 - url: /jquery\.reel-drag\.cur
   static_files: jquery.reel-drag.cur
   upload: jquery\.reel-drag\.cur
+  mime_type: image/x-icon
 
 - url: /jquery\.reel-drag-down\.cur
   static_files: jquery.reel-drag-down.cur
   upload: jquery\.reel-drag-down\.cur
+  mime_type: image/x-icon
 
 
 # 1.1 Cursors (GIFs)
