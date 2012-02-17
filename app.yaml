@@ -179,6 +179,16 @@ handlers:
   upload: jquery\.reel-white\.cur
   mime_type: image/x-icon
 
+- url: /jquery\.reel-white\.cur
+  static_files: jquery.reel-white.cur
+  upload: jquery\.reel-white\.cur
+  mime_type: image/x-icon
+
+- url: /jquery\.reel-black\.cur
+  static_files: jquery.reel-white.cur
+  upload: jquery\.reel-white\.cur
+  mime_type: image/x-icon
+
 - url: /jquery\.reel-drag\.cur
   static_files: jquery.reel-drag.cur
   upload: jquery\.reel-drag\.cur
