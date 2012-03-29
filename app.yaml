@@ -24,19 +24,19 @@ handlers:
 - url: /jquery\.reel\.js/embed
   script: embed.jquery.reel-1.1.4.py
 
-# Edge (1.2-beta)
+# Edge (1.2rc)
 
 - url: /jquery\.reel-edge.js
-  static_files: reel-1.2-beta-min.js
-  upload: reel-1\.2-beta-min\.js
+  static_files: reel-1.2rc-min.js
+  upload: reel-1\.2rc-min\.js
 
 - url: /jquery\.reel-edge-bundle\.js
-  static_files: reel-1.2-beta-bundle.js
-  upload: reel-1\.2-beta-bundle\.js
+  static_files: reel-1.2rc-bundle.js
+  upload: reel-1\.2rc-bundle\.js
 
 - url: /jquery\.reel-edge-devel\.js
-  static_files: reel-1.2-beta.js
-  upload: reel-1\.2-beta\.js
+  static_files: reel-1.2rc.js
+  upload: reel-1\.2rc\.js
 
 - url: /jquery\.reel-edge\.js/embed
   script: embed.jquery.reel-1.2.py
@@ -61,19 +61,19 @@ handlers:
 # 1.2.x
 
 - url: /jquery\.reel-1\.2\.js
-  static_files: reel-1.2-beta-min.js
-  upload: reel-1\.2-beta-min\.js
+  static_files: reel-1.2rc-min.js
+  upload: reel-1\.2rc-min\.js
 
 - url: /jquery\.reel-1\.2-bundle\.js
-  static_files: reel-1.2-beta-bundle.js
-  upload: reel-1\.2-beta-bundle\.js
+  static_files: reel-1.2rc-bundle.js
+  upload: reel-1\.2rc-bundle\.js
 
 - url: /jquery\.reel-1\.2-devel\.js
-  static_files: reel-1.2-beta.js
-  upload: reel-1\.2-beta.js
+  static_files: reel-1.2rc.js
+  upload: reel-1\.2rc.js
 
 - url: /jquery\.reel-1\.2\.js/embed
-  script: embed.jquery.reel-1.1.3.py
+  script: embed.jquery.reel-1.2.py
 
 # 1.1.4
 
