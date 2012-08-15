@@ -1,3 +1,3 @@
 import embed
 
-embed.reel('1.2rc2-bundle')
+embed.reel('1.2-bundle')
