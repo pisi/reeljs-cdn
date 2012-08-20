@@ -7,6 +7,19 @@ default_expiration: 7d
 
 handlers:
 
+# Starting with 404s for manlformed requests
+# produced by some sites in the wilderness
+
+- url: /jquery\.reelTwo\.cursor-drag\.gif
+  static_files: invalid-request.txt
+  upload: invalid-request\.txt
+
+- url: /jquery\.reel2\.cur
+  static_files: invalid-request.txt
+  upload: invalid-request\.txt
+
+
+
 # Latest (1.2)
 
 - url: /jquery\.reel\.js
