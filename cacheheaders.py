@@ -10,6 +10,8 @@ class MainPage(webapp.RequestHandler):
 
     if path == 'favicon.ico':
       self.response.headers['Content-Type']= 'image/png'
+    elif extension == 'cur':
+      self.response.headers['Content-Type']= 'image/x-icon'
     elif extension == 'js':
       self.response.headers['Content-Type']= 'application/javascript'
     elif extension == 'gif':

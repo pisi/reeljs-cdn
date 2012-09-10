@@ -7,7 +7,7 @@ default_expiration: 7d
 
 handlers:
 
-# Starting with 404s for manlformed requests
+# Starting with 404s for malformed requests
 # produced by some sites in the wilderness
 
 - url: /jquery\.reelTwo\.cursor-drag\.gif
@@ -19,6 +19,10 @@ handlers:
   upload: invalid-request\.txt
 
 
+
+# Also some suspicious IPs with http://localhost referrer
+# 116.49.246.141
+# 113.253.15.199
 
 # Latest (1.2)
 
