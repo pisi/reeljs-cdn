@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from google.appengine.ext import webapp
+from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import run_wsgi_app
 
 import os
@@ -97,72 +98,38 @@ class RobotsHandler(webapp.RequestHandler):
 
 
 class JavascriptEmbedHandler(webapp.RequestHandler):
-    def get(self, version):
-        self.embed(lookup(version, reel_versions))
+  def get(self, version):
+      self.embed(lookup(version, reel_versions))
 
-    def embed(self, version):
-      out= ''
-      reel_cdn= {
-          "host": os.environ['HTTP_HOST'],
-          "path": '/jquery.reel',
-          "version": version,
-          "ext": '.js'
-      }
+  def embed(self, version):
 
-      out+= "/*\n"
-      out+= "          @@@@@@@@@@@@@@\n"
-      out+= "      @@@@@@@@@@@@@@@@@@@@@@\n"
-      out+= "    @@@@@@@@          @@@@@@@@\n"
-      out+= "  @@@@@@@                @@@@@@@\n"
-      out+= " @@@@@@@                  @@@@@@@\n"
-      out+= " @@@@@@@                  @@@@@@@\n"
-      out+= " @@@@@@@@     @          @@@@@@@@\n"
-      out+= "  @@@@@@@@@  @@@       @@@@@@@@@\n"
-      out+= "   @@@@@@@@@@@@@@   @@@@@@@@@@@\n"
-      out+= "     @@@@@@@@@@@@@    @@@@@@@\n"
-      out+= "       @@@@@@@@@@@@     @@@\n"
-      out+= "          @@@@@@\n"
-      out+= "         @@@@\n"
-      out+= "        @@\n"
-      out+= " *\n"
-      out+= " *\n"
-      out+= " *\n"
-      out+= " *\n"
-      out+= " */\n"
-      out+= "(function(a, b){\n"
+    data= {
+      "host": os.environ['HTTP_HOST'],
+      "path": '/jquery.reel',
+      "version": version,
+      "ext": '.js'
+    }
 
-      try:
-          # Parse the URL query string and feed `params` hash
-          params= dict(p.split("=") for p in os.environ['QUERY_STRING'].split("&"))
+    try:
+        params= dict(p.split("=") for p in os.environ['QUERY_STRING'].split("&"))
+        options= []
 
-          try:
-              # Extract `.reel()` options from the params
-              options= []
-              for option in params:
-                  if option != "id":
-                      if params[option].isdigit():
-                          options.append(option+': '+params[option])
-                      else:
-                          options.append(option+': "'+params[option]+'"')
+        for option in params:
+            if option == "id":
+                data["id"]= params[option]
+            else:
+                if params[option].isdigit():
+                    options.append(option+': '+params[option])
+                else:
+                    options.append(option+': "'+params[option]+'"')
+              
+        data["options"]= ", ".join(options)
 
-              # And write them into `params`
-              params["options"]= ", ".join(options)
+    except ValueError:
+        output(self, Content('text/plain', 'Embedded Reel requires at least the `id` query parameter to be set'))
+        return
 
-              out+= "  function c(){ a('#%(id)s').reel({ %(options)s }) }\n" % params
-              out+= "  b && c() || a('head').append( a('<script>', {" \
-                    " type: 'application/javascript'," \
-                    " src: 'http://%(host)s%(path)s-%(version)s%(ext)s'" \
-                    " }).bind('load', c));\n" % reel_cdn
-
-          except KeyError:
-              out+= "  throw 'Embedded Reel requires the `id` query parameter to be set';\n"
-
-      except ValueError:
-          out+= "  throw 'Malformed URL parameters of embedded jQuery Reel';\n"
-
-      out+= "})(jQuery, jQuery.reel);"
-
-      output(self, Content('application/javascript', out))
+    output(self, Content('application/javascript', template.render('embed.jst', data)))
 
 
 
@@ -209,20 +176,20 @@ def lookup(needle, heystack):
 
 class Content:
   def __init__(self, content_type, body):
-    self.body = body
-    self.content_type = content_type
-    self.etag = hashlib.sha1(body).hexdigest()
-    self.last_modified = datetime.datetime.now()
+      self.body = body
+      self.content_type = content_type
+      self.etag = hashlib.sha1(body).hexdigest()
+      self.last_modified = datetime.datetime.now()
 
 class ContentFromFile:
   def __init__(self, content_type, path):
-    fh= open(path, 'r')
-    self.body = fh.read()
-    fh.close
-    self.content_type = content_type
-    self.etag = hashlib.sha1(self.body).hexdigest()
-    info= os.stat(path)
-    self.last_modified= datetime.datetime.fromtimestamp(info[8])
+      fh= open(path, 'r')
+      self.body = fh.read()
+      fh.close
+      self.content_type = content_type
+      self.etag = hashlib.sha1(self.body).hexdigest()
+      info= os.stat(path)
+      self.last_modified= datetime.datetime.fromtimestamp(info[8])
 
 
 
