@@ -7,18 +7,23 @@ import os
 import datetime
 import hashlib
 
+
+expire_days= 30
+HTTP_TIME= "%a, %d %b %Y %H:%M:%S GMT"
+
+
 reel_versions= [
     ('',        '1.2'), # Latest stable
     ('-edge',   '1.2'), # Bleeding edge
-    ('-1.2',    '1.2'), # 1.2.x
+    ('-1.2',    '1.2'), # v1.2.x
     ('-1.2.0',  '1.2'),
-    ('-1.1',    '1.1.4'), # 1.1.x
+    ('-1.1',    '1.1.4'), # v1.1.x
     ('-1.1.0',  '1.1'),
     ('-1.1.1',  '1.1.1'),
     ('-1.1.2',  '1.1.2'),
     ('-1.1.3',  '1.1.3'),
     ('-1.1.4',  '1.1.4'),
-    ('-1.0',    '1.0.4'), # 1.0.x
+    ('-1.0',    '1.0.4'), # v1.0.x
     ('-1.0.4',  '1.0.4')
 ]
 
@@ -28,72 +33,67 @@ reel_flavors= [
     ('-devel',   '')         # Human-readable
 ]
 
-reel_cursors= [
-    ('',            '-white'),
-    ('-white',      '-white'),
-    ('-black',      '-black'),
+reel_cursors= [ # v1.2.x
+    ('',            ''),
     ('-drag',       '-drag'),
     ('-drag-down',  '-drag-down')
 ]
 
-reel_cursor_images= [
+reel_cursor_images= [ # v1.2.x
     ('-drag',       '-drag'),
     ('-drag-down',  '-drag-down')
 ]
-
-expire_days= 30
-HTTP_TIME= "%a, %d %b %Y %H:%M:%S GMT"
 
 
 class GreetingsHandler(webapp.RequestHandler):
   def get(self):
-      etag_content(self, Content('See https://github.com/pisi/Reel/wiki/CDN for instructions how to use this CDN.', 'text/plain'))
+      output(self, ContentFromFile('text/x-web-markdown', 'README.markdown'))
 
 
 class NotFoundPageHandler(webapp.RequestHandler):
   def get(self):
       self.error(404)
-      self.response.out.write('Not found. See https://github.com/pisi/Reel/wiki/CDN for instructions.')
+      output(self, Content('text/plain', 'Not found. See https://github.com/pisi/Reel/wiki/CDN for instructions.'))
 
 
 class JavascriptHandler(webapp.RequestHandler):
   def get(self, version, flavor):
-      etag_content(self, ContentFromFile('scripts/reel-'+lookup(version, reel_versions)+lookup(flavor, reel_flavors)+'.js', 'application/javascript'), 'v'+lookup(version, reel_versions))
+      output(self, ContentFromFile('application/javascript', 'scripts/v'+lookup(version, reel_versions)+lookup(flavor, reel_flavors)+'.js'), 'v'+lookup(version, reel_versions))
 
 
 class CursorsHandler(webapp.RequestHandler):
   def get(self, cursor):
-      etag_content(self, ContentFromFile('cursors/jquery.reel'+lookup(cursor, reel_cursors)+'.cur', 'image/x-icon'))
+      output(self, ContentFromFile('image/x-icon', 'cursors/v1.2.x/jquery.reel'+lookup(cursor, reel_cursors)+'.cur'))
 
 
 class OldCursorsHandler(webapp.RequestHandler):
   def get(self, cursor):
-      etag_content(self, ContentFromFile('cursors/jquery.reel.cursor'+lookup(cursor, reel_cursors)+'.gif', 'image/gif'))
+      output(self, ContentFromFile('image/gif', 'cursors/v1.1.x/jquery.reel.cursor'+lookup(cursor, reel_cursors)+'.gif'))
 
 
 class BadgesHandler(webapp.RequestHandler):
   def get(self, badge):
-      etag_content(self, ContentFromFile('badges/jquery.reel'+badge+'.gif', 'image/gif'))
+      output(self, ContentFromFile('image/gif', 'badges/'+badge+'.gif'))
 
 
 class LicencesHandler(webapp.RequestHandler):
   def get(self, license):
-      etag_content(self, ContentFromFile(license+'-LICENSE.txt', 'text/plain'))
+      output(self, ContentFromFile('text/plain', 'licenses/'+license+'.txt'))
 
 
 class FaviconHandler(webapp.RequestHandler):
   def get(self):
-      etag_content(self, ContentFromFile('icon.png', 'image/png'))
+      output(self, ContentFromFile('image/png', 'icon.png'))
 
 
 class BlankImageHandler(webapp.RequestHandler):
   def get(self):
-      etag_content(self, ContentFromFile('blank.gif', 'image/gif'))
+      output(self, ContentFromFile('image/gif', 'blank.gif'))
 
 
 class RobotsHandler(webapp.RequestHandler):
   def get(self):
-      etag_content(self, ContentFromFile('robots.txt', 'text/plain'))
+      output(self, ContentFromFile('text/plain', 'robots.txt'))
 
 
 class JavascriptEmbedHandler(webapp.RequestHandler):
@@ -141,12 +141,12 @@ class JavascriptEmbedHandler(webapp.RequestHandler):
               for option in params:
                   if option != "id":
                       if params[option].isdigit():
-                          options.append(option + ': ' + params[option])
+                          options.append(option+': '+params[option])
                       else:
-                          options.append(option + ': "' + params[option] + '"')
+                          options.append(option+': "'+params[option]+'"')
 
               # And write them into `params`
-              params["options"] = ", ".join(options)
+              params["options"]= ", ".join(options)
 
               out+= "  function c(){ a('#%(id)s').reel({ %(options)s }) }\n" % params
               out+= "  b && c() || a('head').append( a('<script>', {" \
@@ -162,28 +162,28 @@ class JavascriptEmbedHandler(webapp.RequestHandler):
 
       out+= "})(jQuery, jQuery.reel);"
 
-      etag_content(self, Content(out, 'application/javascript'))
+      output(self, Content('application/javascript', out))
 
 
 
 
 
 
-application = webapp.WSGIApplication([
+application= webapp.WSGIApplication([
 
     # Blacklist
-    ('/jquery\.reelTwo.*', NotFoundPageHandler),
+    ('/jquery\.reelTwo.+', NotFoundPageHandler),
     
     # Whitelist
     ('/jquery\.reel(-\d\.\d.?\d?|-edge)?(-bundle|-devel)?\.js', JavascriptHandler),
     ('/jquery\.reel(-.+)?\.js/embed', JavascriptEmbedHandler),
     ('/jquery\.reel(-.+)?\.cur', CursorsHandler),
     ('/jquery\.reel\.cursor(-.+)\.gif', OldCursorsHandler),
-    ('/jquery\.reel(-[1-4])?\.gif', BadgesHandler),
+    ('/jquery\.reel-([1-4])?\.gif', BadgesHandler),
     ('/(MIT|GPL)-LICENSE\.txt', LicencesHandler),
     ('/blank\.gif', BlankImageHandler),
-    ('/favicon.ico', FaviconHandler),
-    ('/robots.txt', RobotsHandler),
+    ('/favicon\.ico', FaviconHandler),
+    ('/robots\.txt', RobotsHandler),
     ('/', GreetingsHandler),
     ('/.*', NotFoundPageHandler)
 
@@ -208,14 +208,14 @@ def lookup(needle, heystack):
 
 
 class Content:
-  def __init__(self, body, content_type):
+  def __init__(self, content_type, body):
     self.body = body
     self.content_type = content_type
     self.etag = hashlib.sha1(body).hexdigest()
     self.last_modified = datetime.datetime.now()
 
 class ContentFromFile:
-  def __init__(self, path, content_type):
+  def __init__(self, content_type, path):
     fh= open(path, 'r')
     self.body = fh.read()
     fh.close
@@ -232,7 +232,7 @@ class ContentFromFile:
 
 
 
-def etag_content(self, content, etag=False):
+def output(self, content, etag=False):
     if not content:
         self.error(404)
         return
