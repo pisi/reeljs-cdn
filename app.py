@@ -15,7 +15,7 @@ NICKNAMES= [
   'thrsixty'
 ]
 
-expire_days= 30
+EXPIRE_DAYS= 30
 HTTP_TIME= "%a, %d %b %Y %H:%M:%S GMT"
 
 
@@ -59,9 +59,7 @@ class GreetingsHandler(webapp.RequestHandler):
 
 class NothingHandler(webapp.RequestHandler):
   def get(self):
-      # Browsers don't cache error responses and this means thousands of requests when someone renames his copy of Reel
-      # 204 (No Content) is being cached, and that dramatically decreases total number of requests generated
-      self.response.set_status(204)
+      output(self, '')
 
 
 class JavascriptHandler(webapp.RequestHandler):
@@ -203,13 +201,19 @@ class ContentFromFile:
 
 
 def output(self, content, etag=False):
+
+    now= datetime.datetime.now()
+    expires= now + datetime.timedelta(days= EXPIRE_DAYS)
+    self.response.headers['Cache-Control']= 'public, max-age='+str(EXPIRE_DAYS * 86400) # 86400 seconds per day
+    self.response.headers['Expires']= expires.strftime(HTTP_TIME)
+
     if not content:
+        self.response.headers['Last-Modified'] = now.strftime(HTTP_TIME)
         self.error(404)
         return
 
     etag = etag or content.etag
     last_modified = content.last_modified.strftime(HTTP_TIME)
-    expires= datetime.datetime.now() + datetime.timedelta(days= expire_days)
 
     serve = True
     if 'If-None-Match' in self.request.headers:
@@ -222,10 +226,8 @@ def output(self, content, etag=False):
             serve = False
 
     self.response.headers['Content-Type'] = content.content_type
-    self.response.headers['Cache-Control']= 'public, max-age='+str(expire_days * 86400) # 86400 seconds per day
     self.response.headers['ETag'] = '%s' % (etag)
     self.response.headers['Last-Modified'] = last_modified
-    self.response.headers['Expires']= expires.strftime(HTTP_TIME)
 
     if serve:
         self.response.set_status(200)
