@@ -8,6 +8,12 @@ import os
 import datetime
 import hashlib
 
+# Different nicknames given to copies of Reel in the wild
+NICKNAMES= [
+  'reelTwo',
+  'spin',
+  'thrsixty'
+]
 
 expire_days= 30
 HTTP_TIME= "%a, %d %b %Y %H:%M:%S GMT"
@@ -64,12 +70,12 @@ class JavascriptHandler(webapp.RequestHandler):
 
 
 class CursorsHandler(webapp.RequestHandler):
-  def get(self, cursor):
+  def get(self, nickname, cursor):
       output(self, ContentFromFile('image/x-icon', 'cursors/v1.2.x/jquery.reel'+lookup(cursor, reel_cursors)+'.cur'))
 
 
 class OldCursorsHandler(webapp.RequestHandler):
-  def get(self, cursor):
+  def get(self, nickname, cursor):
       output(self, ContentFromFile('image/gif', 'cursors/v1.1.x/jquery.reel.cursor'+lookup(cursor, reel_cursors)+'.gif'))
 
 
@@ -141,8 +147,8 @@ application= webapp.WSGIApplication([
 
     ('/jquery\.reel(-\d\.\d.?\d?|-edge)?(-bundle|-devel)?\.js', JavascriptHandler),
     ('/jquery\.reel(-.+)?\.js/embed', JavascriptEmbedHandler),
-    ('/jquery\.reel(-.+)?\.cur', CursorsHandler),
-    ('/jquery\.reel\.cursor(-.+)\.gif', OldCursorsHandler),
+    ('/jquery\.(reel|'+'|'.join(NICKNAMES)+')(-.+)?\.cur', CursorsHandler),
+    ('/jquery\.(reel|'+'|'.join(NICKNAMES)+')\.cursor(-.+)\.gif', OldCursorsHandler),
     ('/jquery\.reel-([1-4])?\.gif', BadgesHandler),
     ('/(MIT|GPL)-LICENSE\.txt', LicencesHandler),
     ('/blank\.gif', BlankImageHandler),
