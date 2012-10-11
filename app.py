@@ -51,10 +51,11 @@ class GreetingsHandler(webapp.RequestHandler):
       output(self, ContentFromFile('text/x-web-markdown', 'README.markdown'))
 
 
-class NotFoundPageHandler(webapp.RequestHandler):
+class NothingHandler(webapp.RequestHandler):
   def get(self):
-      self.error(404)
-      output(self, Content('text/plain', 'Not found. See https://github.com/pisi/Reel/wiki/CDN for instructions.'))
+      # Browsers don't cache error responses and this means thousands of requests when someone renames his copy of Reel
+      # 204 (No Content) is being cached, and that dramatically decreases total number of requests generated
+      self.response.set_status(204)
 
 
 class JavascriptHandler(webapp.RequestHandler):
@@ -138,10 +139,6 @@ class JavascriptEmbedHandler(webapp.RequestHandler):
 
 application= webapp.WSGIApplication([
 
-    # Blacklist
-    ('/jquery\.reelTwo.+', NotFoundPageHandler),
-    
-    # Whitelist
     ('/jquery\.reel(-\d\.\d.?\d?|-edge)?(-bundle|-devel)?\.js', JavascriptHandler),
     ('/jquery\.reel(-.+)?\.js/embed', JavascriptEmbedHandler),
     ('/jquery\.reel(-.+)?\.cur', CursorsHandler),
@@ -152,7 +149,7 @@ application= webapp.WSGIApplication([
     ('/favicon\.ico', FaviconHandler),
     ('/robots\.txt', RobotsHandler),
     ('/', GreetingsHandler),
-    ('/.*', NotFoundPageHandler)
+    ('/.*', NothingHandler)
 
 ], debug= True)
 
