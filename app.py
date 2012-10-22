@@ -16,6 +16,7 @@ NICKNAMES= [
 ]
 
 EXPIRE_DAYS= 30
+IGNORE_DAYS= 365
 HTTP_TIME= "%a, %d %b %Y %H:%M:%S GMT"
 
 
@@ -89,7 +90,7 @@ class LicencesHandler(webapp.RequestHandler):
 
 class FaviconHandler(webapp.RequestHandler):
   def get(self):
-      output(self, ContentFromFile('image/png', 'icon.png'))
+      ignore(self)
 
 
 class BlankImageHandler(webapp.RequestHandler):
@@ -234,6 +235,16 @@ def output(self, content, etag=False):
         self.response.out.write(content.body)
     else:
         self.response.set_status(304)
+
+
+def ignore(self):
+
+    now= datetime.datetime.now()
+    expires= now + datetime.timedelta(days= IGNORE_DAYS)
+    self.response.headers['Cache-Control']= 'public, max-age='+str(IGNORE_DAYS * 86400) # 86400 seconds per day
+    self.response.headers['Expires']= expires.strftime(HTTP_TIME)
+
+    self.response.set_status(204)
 
 
 
