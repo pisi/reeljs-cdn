@@ -58,6 +58,11 @@ class GreetingsHandler(webapp.RequestHandler):
       output(self, ContentFromFile('text/x-web-markdown', 'README.markdown'))
 
 
+class ReadmeHandler(webapp.RequestHandler):
+  def get(self, version, format):
+      self.redirect('https://github.com/pisi/Reel/blob/v'+lookup(version, reel_versions)+'/README.markdown')
+
+
 class NothingHandler(webapp.RequestHandler):
   def get(self):
       output(self, '')
@@ -144,6 +149,7 @@ class JavascriptEmbedHandler(webapp.RequestHandler):
 
 application= webapp.WSGIApplication([
 
+    ('/jquery\.reel(-\d\.\d.?\d?|-edge)?(\.html)?', ReadmeHandler),
     ('/jquery\.reel(-\d\.\d.?\d?|-edge)?(-bundle|-devel)?\.js', JavascriptHandler),
     ('/jquery\.reel(-.+)?\.js/embed', JavascriptEmbedHandler),
     ('/jquery\.(reel|'+'|'.join(NICKNAMES)+')(-.+)?\.cur', CursorsHandler),
