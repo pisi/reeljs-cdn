@@ -10,7 +10,7 @@ import hashlib
 
 # Different nicknames given to copies of Reel in the wild
 NICKNAMES= [
-  'reelTwo',
+  'reel.+',
   'spin',
   'thrsixty'
 ]
