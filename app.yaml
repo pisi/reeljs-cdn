@@ -5,7 +5,9 @@ api_version: 1
 
 default_expiration: 30d
 
-handlers:
+inbound_services:
+- warmup
 
+handlers:
 - url: /.*
   script: app.py
