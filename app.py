@@ -149,12 +149,12 @@ class JavascriptEmbedHandler(webapp.RequestHandler):
 
 application= webapp.WSGIApplication([
 
-    ('/jquery\.reel(-\d\.\d.?\d?|-edge)?(\.html)?', ReadmeHandler),
     ('/jquery\.reel(-\d\.\d.?\d?|-edge)?(-bundle|-devel)?\.js', JavascriptHandler),
-    ('/jquery\.reel(-.+)?\.js/embed', JavascriptEmbedHandler),
     ('/jquery\.(reel|'+'|'.join(NICKNAMES)+')(-.+)?\.cur', CursorsHandler),
     ('/jquery\.(reel|'+'|'.join(NICKNAMES)+')\.cursor(-.+)\.gif', OldCursorsHandler),
     ('/jquery\.reel-([1-4])?\.gif', BadgesHandler),
+    ('/jquery\.reel(-.+)?\.js/embed', JavascriptEmbedHandler),
+    ('/jquery\.reel(-\d\.\d.?\d?|-edge)?(\.html)?', ReadmeHandler),
     ('/(MIT|GPL)-LICENSE\.txt', LicencesHandler),
     ('/blank\.gif', BlankImageHandler),
     ('/favicon\.ico', FaviconHandler),
