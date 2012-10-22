@@ -1,14 +1,7 @@
-jQuery Reel CDN
-===============
-App for serving latest [jQuery Reel][reel] and its belongings
-via a cloud-based *content delivery network*.
+[code.vostrel.cz](https://github.com/pisi/reeljs-cdn)
+=====================================================
 
-See [CDN][cdn] wiki for usage instructions.
+ Serving [jQuery Reel](https://github.com/pisi/Reel)
+ from clouds with [GAE](http://appengine.google.com)
 
-
-Powered by [Google App Engine][gae]
-
-
-[reel]:http://jquery.vostrel.cz/reel
-[cdn]:https://github.com/pisi/Reel/wiki/CDN
-[gae]:http://appengine.google.com
+[Instructions](https://github.com/pisi/Reel/wiki/CDN)
