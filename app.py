@@ -9,11 +9,11 @@ import datetime
 import hashlib
 
 # Different nicknames given to copies of Reel in the wild
-NICKNAMES= [
+NICKNAMES= '|'.join([
   'reel.+',
   'spin',
   'thrsixty'
-]
+])
 
 EXPIRE_DAYS= 30
 IGNORE_DAYS= 365
@@ -150,8 +150,8 @@ class JavascriptEmbedHandler(webapp.RequestHandler):
 application= webapp.WSGIApplication([
 
     ('/jquery\.reel(-\d\.\d.?\d?|-edge)?(-bundle|-devel)?\.js', JavascriptHandler),
-    ('/jquery\.(reel|'+'|'.join(NICKNAMES)+')(-.+)?\.cur', CursorsHandler),
-    ('/jquery\.(reel|'+'|'.join(NICKNAMES)+')\.cursor(-.+)\.gif', OldCursorsHandler),
+    ('/jquery\.(reel|'+NICKNAMES+')(-.+)?\.cur', CursorsHandler),
+    ('/jquery\.(reel|'+NICKNAMES+')\.cursor(-.+)\.gif', OldCursorsHandler),
     ('/jquery\.reel-([1-4])?\.gif', BadgesHandler),
     ('/jquery\.reel(-.+)?\.js/embed', JavascriptEmbedHandler),
     ('/jquery\.reel(-\d\.\d.?\d?|-edge)?(\.html)?', ReadmeHandler),
