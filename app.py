@@ -22,7 +22,7 @@ HTTP_TIME= "%a, %d %b %Y %H:%M:%S GMT"
 
 reel_versions= [
     ('',        '1.3.0'), # Latest stable
-    ('-edge',   '1.3.0'), # Bleeding edge
+    ('-edge',   '1.3.1-devel'), # Bleeding edge
     ('-1.3',    '1.3.0'), # v1.3.x
     ('-1.3.0',  '1.3.0'),
     ('-1.2',    '1.2.1'), # v1.2.x
