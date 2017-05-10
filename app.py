@@ -7,6 +7,7 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 import os
 import datetime
 import hashlib
+import re
 
 # Different nicknames given to copies of Reel in the wild
 NICKNAMES= '|'.join([
@@ -17,7 +18,8 @@ NICKNAMES= '|'.join([
 
 EXPIRE_DAYS= 30
 IGNORE_DAYS= 365
-HTTP_TIME= "%a, %d %b %Y %H:%M:%S GMT"
+ZONELESS_TIME= "%a, %d %b %Y %H:%M:%S"
+HTTP_TIME= ZONELESS_TIME + " GMT"
 
 
 reel_versions= [
@@ -231,9 +233,12 @@ def output(self, content, etag=False):
         if etag in etags:
             serve = False
     if 'If-Modified-Since' in self.request.headers:
-        last_seen = datetime.datetime.strptime(self.request.headers['If-Modified-Since'], HTTP_TIME)
-        if last_seen >= content.last_modified.replace(microsecond=0):
-            serve = False
+        header_date = self.request.headers['If-Modified-Since']
+        if header_date:
+            time = re.match( r'\w{3}, \d{2} \w{3} \d{4} \d{2}:\d{2}:\d{2}', header_date ).group( 0 )
+            last_seen = datetime.datetime.strptime( time, ZONELESS_TIME )
+            if last_seen >= content.last_modified.replace( microsecond=0 ):
+                serve = False
 
     self.response.headers['Content-Type'] = content.content_type
     self.response.headers['ETag'] = '%s' % (etag)
