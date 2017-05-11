@@ -56,6 +56,11 @@ reel_cursor_images= [ # v1.2.x
 ]
 
 
+class WarmupHandler(webapp2.RequestHandler):
+  def get(self):
+      output(self, Content('text/plain', ':*'))
+
+
 class GreetingsHandler(webapp2.RequestHandler):
   def get(self):
       output(self, ContentFromFile('text/x-web-markdown', 'README.markdown'))
@@ -167,6 +172,7 @@ application= webapp2.WSGIApplication([
     ('/blank\.gif', BlankImageHandler),
     ('/favicon\.ico', FaviconHandler),
     ('/robots\.txt', RobotsHandler),
+    ('/_ah/warmup', WarmupHandler),
     ('/', GreetingsHandler),
     ('/.*', NothingHandler)
 
