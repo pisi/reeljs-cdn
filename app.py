@@ -134,11 +134,12 @@ class JavascriptEmbedHandler(webapp.RequestHandler):
             if option == "id":
                 data["id"]= params[option]
             else:
-                if params[option].isdigit():
-                    options.append(option+': '+params[option])
-                else:
-                    options.append(option+': "'+params[option]+'"')
-              
+                if params[option]:
+                    if params[option].isdigit():
+                        options.append(option+': '+params[option])
+                    else:
+                        options.append(option+': "'+params[option]+'"')
+
         data["options"]= ", ".join(options)
 
     except ValueError:
