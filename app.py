@@ -11,9 +11,9 @@ import re
 
 # Different nicknames given to copies of Reel in the wild
 NICKNAMES= '|'.join([
-  'reel.+',
-  'spin',
-  'thrsixty'
+    'reel.+',
+    'spin',
+    'thrsixty'
 ])
 
 EXPIRE_DAYS= 30
@@ -229,10 +229,12 @@ def output(self, content, etag=False):
     last_modified = content.last_modified.strftime(HTTP_TIME)
 
     serve = True
+
     if 'If-None-Match' in self.request.headers:
         etags = [x.strip() for x in self.request.headers['If-None-Match'].split(',')]
         if etag in etags:
             serve = False
+
     if 'If-Modified-Since' in self.request.headers:
         header_date = self.request.headers['If-Modified-Since']
         if header_date:
