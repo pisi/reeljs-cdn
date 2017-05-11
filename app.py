@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 
-from google.appengine.ext import webapp
-from google.appengine.ext.webapp import template
-from google.appengine.ext.webapp.util import run_wsgi_app
+import webapp2
 
 import os
 import datetime
@@ -58,62 +56,62 @@ reel_cursor_images= [ # v1.2.x
 ]
 
 
-class GreetingsHandler(webapp.RequestHandler):
+class GreetingsHandler(webapp2.RequestHandler):
   def get(self):
       output(self, ContentFromFile('text/x-web-markdown', 'README.markdown'))
 
 
-class ReadmeHandler(webapp.RequestHandler):
+class ReadmeHandler(webapp2.RequestHandler):
   def get(self, version, format):
       self.redirect('https://github.com/pisi/Reel/blob/v'+lookup(version, reel_versions)+'/README.markdown')
 
 
-class NothingHandler(webapp.RequestHandler):
+class NothingHandler(webapp2.RequestHandler):
   def get(self):
       output(self, '')
 
 
-class JavascriptHandler(webapp.RequestHandler):
+class JavascriptHandler(webapp2.RequestHandler):
   def get(self, version, flavor):
       output(self, ContentFromFile('application/javascript', 'scripts/v'+lookup(version, reel_versions)+lookup(flavor, reel_flavors)+'.js'), 'v'+lookup(version, reel_versions))
 
 
-class CursorsHandler(webapp.RequestHandler):
+class CursorsHandler(webapp2.RequestHandler):
   def get(self, nickname, cursor):
       output(self, ContentFromFile('image/x-icon', 'cursors/v1.2.x/jquery.reel'+lookup(cursor, reel_cursors)+'.cur'))
 
 
-class OldCursorsHandler(webapp.RequestHandler):
+class OldCursorsHandler(webapp2.RequestHandler):
   def get(self, nickname, cursor):
       output(self, ContentFromFile('image/gif', 'cursors/v1.1.x/jquery.reel.cursor'+lookup(cursor, reel_cursors)+'.gif'))
 
 
-class BadgesHandler(webapp.RequestHandler):
+class BadgesHandler(webapp2.RequestHandler):
   def get(self, badge):
       output(self, ContentFromFile('image/gif', 'badges/'+badge+'.gif'))
 
 
-class LicencesHandler(webapp.RequestHandler):
+class LicencesHandler(webapp2.RequestHandler):
   def get(self, license):
       output(self, ContentFromFile('text/plain', 'licenses/'+license+'.txt'))
 
 
-class FaviconHandler(webapp.RequestHandler):
+class FaviconHandler(webapp2.RequestHandler):
   def get(self):
       ignore(self)
 
 
-class BlankImageHandler(webapp.RequestHandler):
+class BlankImageHandler(webapp2.RequestHandler):
   def get(self):
       output(self, ContentFromFile('image/gif', 'blank.gif'))
 
 
-class RobotsHandler(webapp.RequestHandler):
+class RobotsHandler(webapp2.RequestHandler):
   def get(self):
       output(self, ContentFromFile('text/plain', 'robots.txt'))
 
 
-class JavascriptEmbedHandler(webapp.RequestHandler):
+class JavascriptEmbedHandler(webapp2.RequestHandler):
   def get(self, version):
       self.embed(lookup(version, reel_versions))
 
@@ -146,14 +144,18 @@ class JavascriptEmbedHandler(webapp.RequestHandler):
         output(self, Content('text/plain', 'Embedded Reel requires at least the `id` query parameter to be set'))
         return
 
-    output(self, Content('application/javascript', template.render('embed.jst', data)))
+    from jinja2 import Template
+
+    file= open('embed.jst', 'r')
+    template = Template(file.read())
+    file.close
+
+    output(self, Content('application/javascript', template.render(data)))
 
 
 
 
-
-
-application= webapp.WSGIApplication([
+application= webapp2.WSGIApplication([
 
     ('/jquery\.reel(-\d\.\d.?\d?|-edge)?(-bundle|-devel)?\.js', JavascriptHandler),
     ('/jquery\.(reel|'+NICKNAMES+')(-.+)?\.cur', CursorsHandler),
@@ -170,8 +172,6 @@ application= webapp.WSGIApplication([
 
 ], debug= True)
 
-def main():
-    run_wsgi_app(application)
 
 
 
@@ -264,7 +264,3 @@ def ignore(self):
     self.response.set_status(204)
 
 
-
-
-if __name__ == "__main__":
-    main()
